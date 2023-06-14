@@ -4,7 +4,10 @@ class PostsController < ApplicationController
   def index
     posts = Post.all.order(created_at: :desc)
 
-    render json: PostSerializer.new(posts).serializable_hash
+    pagy, records = pagy(posts, items: 10)
+    pagy_headers_merge(pagy)
+
+    render json: PostSerializer.new(records, meta: pagy_metadata(pagy)).serializable_hash
   end
 
   def show
