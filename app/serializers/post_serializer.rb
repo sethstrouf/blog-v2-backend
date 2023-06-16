@@ -3,6 +3,8 @@ class PostSerializer
 
   attributes :title, :summary, :body, :created_at
 
+  has_many :comments
+
   attribute :images do |post|
     urls = []
 

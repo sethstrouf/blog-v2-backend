@@ -11,7 +11,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    render json: PostSerializer.new(@post).serializable_hash
+    render json: PostSerializer.new(@post, include: [:comments]).serializable_hash
   end
 
   def create

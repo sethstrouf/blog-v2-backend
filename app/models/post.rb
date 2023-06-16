@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  has_many :comments, -> { order(created_at: :desc) }
+
   has_many_attached :images
 
   validates :images, content_type: { in: %w[image/jpeg image/gif image/png],
