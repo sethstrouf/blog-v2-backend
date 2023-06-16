@@ -6,6 +6,7 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
+  - 3.2.2
 
 * System dependencies
 
@@ -14,6 +15,10 @@ Things you may want to cover:
 * Database creation
 
 * Database initialization
+
+* Database connection
+  - `railway shell` to connect to production db
+     - may have to run `railway link` and/or `railway service` first
 
 * How to run the test suite
 
