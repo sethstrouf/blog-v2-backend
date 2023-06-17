@@ -8,9 +8,9 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     if Rails.env.development?
-      origins 'localhost:5173'
+      origins 'localhost:5173', 'localhost:5174'
     else
-      origins 'https://hannahsblogv2.netlify.app'
+      origins 'https://hannahsblogv2.netlify.app', 'https://hannahbauer.me', 'https://hannahsblogv2admin.netlify.app', 'https://admin.hannahbauer.me'
     end
 
     resource "*",
