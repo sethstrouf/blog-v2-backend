@@ -19,6 +19,7 @@ Things you may want to cover:
 * Database connection
   - `railway shell` to connect to production db
      - may have to run `railway link` and/or `railway service` first
+  - `rails c -e production` to run console in production
 
 * How to run the test suite
 
