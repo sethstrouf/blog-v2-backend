@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show update destroy attach_images ]
+  before_action :set_post, only: %i[ show update destroy attach_images delete_image ]
 
   def index
     posts = Post.all.order(created_at: :desc)
@@ -42,6 +42,12 @@ class PostsController < ApplicationController
     end
 
     render json: PostSerializer.new(@post).serializable_hash
+  end
+
+  def delete_image
+    @post.images.each do |image|
+      image.purge if params[:image_url] == Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true)
+    end
   end
 
   private
