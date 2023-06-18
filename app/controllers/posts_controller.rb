@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show update destroy ]
+  before_action :set_post, only: %i[ show update destroy attach_images ]
 
   def index
     posts = Post.all.order(created_at: :desc)
@@ -34,6 +34,14 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
+  end
+
+  def attach_images
+    params[:images].each do |image|
+      @post.images.attach(image)
+    end
+
+    render json: PostSerializer.new(@post).serializable_hash
   end
 
   private
