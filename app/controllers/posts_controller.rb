@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+  include ApiKeyAuthenticatable
+
+  prepend_before_action :authenticate_with_api_key!, only: %i[ create update destroy ]
   before_action :set_post, only: %i[ show update destroy attach_images delete_image ]
 
   def index

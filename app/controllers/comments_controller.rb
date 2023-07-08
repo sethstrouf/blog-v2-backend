@@ -1,14 +1,15 @@
 class CommentsController < ApplicationController
+  include ApiKeyAuthenticatable
+
+  prepend_before_action :authenticate_with_api_key!, only: %i[ destroy ]
   before_action :set_comment, only: %i[ destroy ]
 
-  # GET /comments
   def index
     comments = Comment.all
 
     render json: CommentSerializer.new(comments).serializable_hash
   end
 
-  # POST /comments
   def create
     comment = Comment.new(comment_params)
 
@@ -19,7 +20,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  # DELETE /comments/1
   def destroy
     @comment.destroy
   end
