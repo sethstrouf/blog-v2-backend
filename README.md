@@ -1,30 +1,46 @@
-# README
+# blog-v2-backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails 7 API for Hannah's blog. Powers the public frontend and admin CMS.
 
-Things you may want to cover:
+## Requirements
 
-* Ruby version
-  - 3.2.2
+- Ruby 3.2.2
+- PostgreSQL
 
-* System dependencies
+## Setup
 
-* Configuration
+```bash
+bundle install
+rails db:create db:migrate db:seed
+```
 
-* Database creation
+Create an admin user in the console:
 
-* Database initialization
+```bash
+rails console
+User.create!(email: 'you@example.com', password: 'your-password')
+```
 
-* Database connection
-  - `railway shell` to connect to production db
-     - may have to run `railway link` and/or `railway service` first
-  - `rails c -e production` to run console in production
+## Environment variables
 
-* How to run the test suite
+| Variable | Description |
+|----------|-------------|
+| `API_KEY_HMAC_SECRET_KEY` | Secret for hashing API keys (required in all environments) |
+| `DATABASE_URL` | PostgreSQL connection (production) |
+| `AWS_*` | Active Storage S3 credentials (production) |
 
-* Services (job queues, cache servers, search engines, etc.)
+## Run locally
 
-* Deployment instructions
+```bash
+rails server   # http://localhost:3000
+```
 
-* ...
+## API overview
+
+| Endpoint | Auth | Description |
+|----------|------|-------------|
+| `GET /posts` | Public | Paginated posts (`?items=10&page=1`) |
+| `GET /posts/:id` | Public | Single post with comments |
+| `POST /comments` | Public | Create a comment |
+| `POST /api_keys` | Basic auth | Login (returns bearer token) |
+| Mutating post/comment/image routes | Bearer token | Admin only |
