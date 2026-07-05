@@ -67,9 +67,14 @@ if Post.count.zero?
 
     if !post[:image_url].empty?
       image_url = post[:image_url]
-      downloaded_file = URI.open(image_url)
-      new_post.images.attach(io: downloaded_file, filename: "image#{i}.png")
-      i = i + 1
+      begin
+        downloaded_file = URI.open(image_url)
+        filename = File.basename(URI.parse(image_url).path)
+        new_post.images.attach(io: downloaded_file, filename: filename)
+        i = i + 1
+      rescue OpenURI::HTTPError => e
+        warn "Skipping image for \"#{post[:title]}\": #{image_url} (#{e.message})"
+      end
     end
   end
 end
